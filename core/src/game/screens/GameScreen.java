@@ -10,8 +10,8 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class GameScreen implements Screen {
 	private Stage _stage;
-	final public int GAME_HEIGHT = Gdx.graphics.getHeight();
-	final public int GAME_WEIGHT = Gdx.graphics.getWidth();
+	final static public int GAME_HEIGHT = Gdx.graphics.getHeight();
+	final static public int GAME_WEIGHT = Gdx.graphics.getWidth();
 
 	public GameScreen() {
 		Gdx.app.log("GameScreen", "create");
@@ -26,7 +26,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(final float delta) {
-		Gdx.app.log("GameScreen", "render in " + delta);
+		// Gdx.app.log("GameScreen", "render in " + delta);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		_stage.act(delta);
