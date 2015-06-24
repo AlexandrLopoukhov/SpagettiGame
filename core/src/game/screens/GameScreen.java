@@ -1,5 +1,7 @@
 package game.screens;
 
+import game.model.GameWorld;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,18 +14,19 @@ public class GameScreen implements Screen {
 	final public int GAME_WEIGHT = Gdx.graphics.getWidth();
 
 	public GameScreen() {
-		_stage = new Stage(new StretchViewport(GAME_WEIGHT, GAME_HEIGHT));
+		Gdx.app.log("GameScreen", "create");
+		_stage = new GameWorld(new StretchViewport(GAME_WEIGHT, GAME_HEIGHT));
 		Gdx.input.setInputProcessor(_stage);
 	}
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-
+		Gdx.app.log("GameScreen", "show");
 	}
 
 	@Override
 	public void render(final float delta) {
+		Gdx.app.log("GameScreen", "render in " + delta);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		_stage.act(delta);
@@ -32,29 +35,28 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resize(final int width, final int height) {
-		// TODO Auto-generated method stub
-
+		Gdx.app.log("GameScreen", "resize to " + width + " * " + height);
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-
+		Gdx.app.log("GameScreen", "pause");
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-
+		Gdx.app.log("GameScreen", "resume");
 	}
 
 	@Override
 	public void hide() {
+		Gdx.app.log("GameScreen", "hide");
 		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
 	public void dispose() {
+		Gdx.app.log("GameScreen", "dispose");
 		_stage.dispose();
 	}
 
