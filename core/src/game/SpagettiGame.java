@@ -15,4 +15,9 @@ public class SpagettiGame extends Game {
 		_game = new GameScreen();
 		setScreen(_game);
 	}
+
+	@Override
+	public void render() {
+		super.render();
+	}
 }
