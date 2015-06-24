@@ -13,8 +13,8 @@ public class Background extends Actor {
 
 	public Background() {
 		Gdx.app.log("Background", "create & load texture");
-		_texture = new Texture(Gdx.files.internal("stars.png"));
-		_speed = 50;
+		_texture = new Texture(Gdx.files.internal("stars.jpg"));
+		_speed = 100;
 		setWidth(GameScreen.GAME_WIDTH * 2);
 		setHeight(GameScreen.GAME_HEIGHT);
 	}
