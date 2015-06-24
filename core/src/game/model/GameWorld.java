@@ -1,6 +1,7 @@
 package game.model;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,7 +16,19 @@ public class GameWorld extends Stage {
 		this.addListener(new InputListener() {
 			@Override
 			public boolean keyDown(final InputEvent event, final int keycode) {
-				Gdx.app.log("GameWorld", "Listener get code " + keycode);
+				switch (keycode) {
+				case Keys.LEFT:
+					Gdx.app.log("GameWorld", Keys.LEFT + "create" + keycode);
+					break;
+				case Keys.RIGHT:
+					break;
+				case Keys.UP:
+					break;
+				case Keys.DOWN:
+					break;
+				case Keys.SPACE:
+					break;
+				}
 				return super.keyDown(event, keycode);
 			}
 		});

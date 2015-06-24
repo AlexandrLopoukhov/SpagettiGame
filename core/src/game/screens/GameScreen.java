@@ -11,11 +11,11 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 public class GameScreen implements Screen {
 	private Stage _stage;
 	final static public int GAME_HEIGHT = Gdx.graphics.getHeight();
-	final static public int GAME_WEIGHT = Gdx.graphics.getWidth();
+	final static public int GAME_WIDTH = Gdx.graphics.getWidth();
 
 	public GameScreen() {
 		Gdx.app.log("GameScreen", "create");
-		_stage = new GameWorld(new StretchViewport(GAME_WEIGHT, GAME_HEIGHT));
+		_stage = new GameWorld(new StretchViewport(GAME_WIDTH, GAME_HEIGHT));
 		Gdx.input.setInputProcessor(_stage);
 	}
 

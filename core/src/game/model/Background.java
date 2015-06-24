@@ -9,24 +9,27 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Background extends Actor {
 	Texture _texture;
+	int _speed;
 
 	public Background() {
 		Gdx.app.log("Background", "create & load texture");
 		_texture = new Texture(Gdx.files.internal("stars.png"));
+		_speed = 50;
+		setWidth(GameScreen.GAME_WIDTH * 2);
+		setHeight(GameScreen.GAME_HEIGHT);
 	}
 
 	@Override
 	public void draw(final Batch batch, final float parentAlpha) {
-		// TODO Auto-generated method stub
-		batch.draw(_texture, getX(), getY(), GameScreen.GAME_WEIGHT * 2,
-				GameScreen.GAME_HEIGHT);
-		// super.draw(batch, parentAlpha);
+		batch.draw(_texture, getX(), getY(), getWidth(), getHeight());
 	}
 
 	@Override
 	public void act(final float delta) {
-		// TODO Auto-generated method stub
-		super.act(delta);
+		if (getX() < -getWidth() / 2) {
+			setX(0);
+		}
+		setX(getX() - _speed * delta);
 	}
 
 }
