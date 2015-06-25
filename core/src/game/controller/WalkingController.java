@@ -22,13 +22,7 @@ public class WalkingController extends Actor {
 	// размер движущейся части (khob)
 	public static float CSIZE = (GameScreen.GAME_HEIGHT + GameScreen.GAME_WIDTH) / 20;
 
-	public static float CIRCLERADIUS = 1.5f;
-	public static float CONTRLRADIUS = 3F;
-	// public static float Coefficient = 1F;
-
-	// угол для определения направления
 	float _angle;
-	// public static int Opacity = 1;
 	GameWorld _world;
 
 	// координаты отклонения khob
@@ -59,10 +53,6 @@ public class WalkingController extends Actor {
 		this._bounds.width = SIZE;
 		this._bounds.height = SIZE;
 		this._world = world;
-
-		// getOffsetPosition().x = 0;
-		// getOffsetPosition().y = 0;
-
 		setHeight(SIZE);
 		setWidth(SIZE);
 		setX(_position.x);
@@ -99,8 +89,6 @@ public class WalkingController extends Actor {
 				getX() + SIZE / 2 - CSIZE / 2 + getOffsetPosition().x, getY()
 						+ SIZE / 2 - CSIZE / 2 + getOffsetPosition().y, CSIZE,
 				CSIZE);
-		// Gdx.app.log("WalkingController", "x " + getOffsetPosition().x + " y "
-		// + getOffsetPosition().y);
 
 	}
 
@@ -113,7 +101,6 @@ public class WalkingController extends Actor {
 	public Actor hit(final float x, final float y, final boolean touchable) {
 		// Процедура проверки. Если точка в прямоугольнике актёра, возвращаем
 		// актёра.
-		// Gdx.app.log("WalkingController", "hit");
 		return x > 0 && x < getWidth() && y > 0 && y < getHeight() ? this
 				: null;
 	}
@@ -135,21 +122,14 @@ public class WalkingController extends Actor {
 		// точка касания относительно центра джойстика
 		float calcX = x - SIZE / 2;
 		float calcY = y - SIZE / 2;
-		// setOffsetPosition(x, y);
-		// Gdx.app.log("WalkingController", "x " + calcX + " y " + calcY);
 
 		// определяем лежит ли точка касания в окружности джойстика
 		if (((Math.abs(calcX * calcY)) <= SIZE * SIZE / 4)) {
-			// Gdx.app.log("WalkingController", "x "
-			// + ((calcX * calcY) <= SIZE * SIZE / 4));
 
-			// пределяем угол касания
+			// определяем угол
 			double angle = Math.atan(calcX / calcY) * 180 / Math.PI;
-			// Gdx.app.log("WalkingControl", "" + angle);
 
-			// угол будет в диапозоне [-90;90]. Удобнее работать, если он в
-			// диапозоне [0;360]
-			// поэтому пошаманим немного
+			// меняем угол к формату от 0 до 360
 			if (angle < 0 && calcY < 0) {
 				angle += 180;
 			}
@@ -159,62 +139,34 @@ public class WalkingController extends Actor {
 			if (angle < 0 && calcX < 0) {
 				angle += 360;
 			}
-			// if (angle < 0) {
-			// if (calcX < 0) {
-			// angle = 180 + angle;
-			// } else {
-			// angle += 360;
-			// }
-			// }
-			Gdx.app.log("WalkingControl", "" + angle);
 
 			// в зависимости от угла указываем направление, куда двигать игрока
 			if (angle < 45 || angle > 315) {
 				_world.getMonstr().changeVelocity(0,
 						_world.getMonstr().getSpeed());
-				// ((Player) _world.selectedActor).upPressed();
 			}
 
 			if (angle > 135 && angle < 225) {
 				_world.getMonstr().changeVelocity(0,
 						-_world.getMonstr().getSpeed());
-				// ((Player) _world.selectedActor).downPressed();
 			}
 
 			if (angle > 225 && angle < 315) {
 				_world.getMonstr().changeVelocity(
 						-_world.getMonstr().getSpeed(), 0);
-				// ((Player) _world.selectedActor).leftPressed();
 			}
 
 			if (angle > 45 && angle < 135) {
 				_world.getMonstr().changeVelocity(
 						_world.getMonstr().getSpeed(), 0);
-				// ((Player) _world.selectedActor).rightPressed();
 			}
 
-			// двигаем игрока
-			// ((Player) _world.selectedActor).processInput();
-
-			angle = (float) (angle * Math.PI / 180);
-			// getOffsetPosition().x = (float) ((calcX * calcX + calcY * calcY >
-			// 1F) ? Math
-			// .cos(angle) * 0.75F : calcX);
-			// getOffsetPosition().y = (float) ((calcX * calcX + calcY * calcY >
-			// 1F) ? Math
-			// .sin(angle) * 0.75F : calcY);
-			getOffsetPosition().x = calcX / 2;
-			getOffsetPosition().y = calcY / 2;
+			setOffsetPosition(calcX / 2, calcY / 2);
 
 		} else {
-
-			// _world.resetSelected();
 			_world.getMonstr().changeVelocity(0, 0);
-			getOffsetPosition().x = 0;
-			getOffsetPosition().y = 0;
+			setOffsetPosition(0, 0);
 		}
-		// Gdx.app.log("WalkingController", "x " + getOffsetPosition().x + " y "
-		// + getOffsetPosition().y);
 
 	}
 
