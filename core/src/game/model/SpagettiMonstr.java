@@ -66,4 +66,14 @@ public class SpagettiMonstr extends Actor implements GameUnit {
 		return _body.overlaps(rectangle);
 	}
 
+	@Override
+	public boolean isAlive() {
+		return _isAlive;
+	}
+
+	@Override
+	public void kill() {
+		_isAlive = false;
+	}
+
 }

@@ -33,7 +33,9 @@ public class UFO extends Actor implements GameUnit {
 
 	@Override
 	public void draw(final Batch batch, final float parentAlpha) {
-		batch.draw(_texture, getX(), getY(), getWidth(), getHeight());
+		if (_isAlive) {
+			batch.draw(_texture, getX(), getY(), getWidth(), getHeight());
+		}
 	}
 
 	@Override
@@ -48,4 +50,16 @@ public class UFO extends Actor implements GameUnit {
 		return _body.overlaps(rectangle);
 	}
 
+	@Override
+	public boolean isAlive() {
+		return _isAlive;
+	}
+
+	@Override
+	public void kill() {
+		this.remove();
+		_isAlive = false;
+		_texture.dispose();
+		_body.set(0, 0, 0, 0);
+	}
 }
