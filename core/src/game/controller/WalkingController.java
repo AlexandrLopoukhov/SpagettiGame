@@ -2,6 +2,7 @@ package game.controller;
 
 import game.model.GameWorld;
 import game.screens.GameScreen;
+import game.screens.Meatball;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,7 +18,7 @@ public class WalkingController extends Actor {
 	Texture _temp;
 	TextureRegion _arrows;
 	TextureRegion _khob;
-	// размер джоя
+	// размер джостика
 	public static float SIZE = (GameScreen.GAME_HEIGHT + GameScreen.GAME_WIDTH) / 10;
 	// размер движущейся части (khob)
 	public static float CSIZE = (GameScreen.GAME_HEIGHT + GameScreen.GAME_WIDTH) / 20;
@@ -118,7 +119,10 @@ public class WalkingController extends Actor {
 	}
 
 	public void withControl(final float x, final float y) {
-
+		if (Gdx.input.isTouched(2)) {
+			_world.addActor(new Meatball(_world.getMonstr().getX(), _world
+					.getMonstr().getY()));
+		}
 		// точка касания относительно центра джойстика
 		float calcX = x - SIZE / 2;
 		float calcY = y - SIZE / 2;

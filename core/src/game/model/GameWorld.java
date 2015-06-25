@@ -2,6 +2,7 @@ package game.model;
 
 import game.controller.WalkingController;
 import game.screens.GameScreen;
+import game.screens.Meatball;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -45,6 +46,7 @@ public class GameWorld extends Stage {
 					_monstr.changeVelocity(0, -_monstr.getSpeed());
 					break;
 				case Keys.SPACE:
+					addActor(new Meatball(_monstr.getX(), _monstr.getY()));
 					break;
 				}
 				return super.keyDown(event, keycode);

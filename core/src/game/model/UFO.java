@@ -5,6 +5,7 @@ import game.screens.GameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -60,6 +61,7 @@ public class UFO extends Actor implements GameUnit {
 		this.remove();
 		_isAlive = false;
 		_texture.dispose();
+		// костыль
 		_body.set(0, 0, 0, 0);
 	}
 }
