@@ -1,5 +1,7 @@
 package game.model;
 
+import java.util.Random;
+import game.controller.AssetLoader;
 import game.controller.WalkingController;
 import game.screens.GameScreen;
 import game.screens.Meatball;
@@ -11,16 +13,17 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class GameWorld extends Stage {
 	SpagettiMonstr _monstr;
 	WalkingController _control;
-	UFO _ufo = new UFO();// /
+	float _gameTime = 0;
 
 	public GameWorld(final StretchViewport stretchViewport) {
 		super(stretchViewport);
+		AssetLoader.loadAsset();
+		new SheduleGenerateEnemy().start();
 		Gdx.app.log("GameWorld", "create");
 		addActor(new Background());
 		_monstr = new SpagettiMonstr();
@@ -28,7 +31,6 @@ public class GameWorld extends Stage {
 				- GameScreen.GAME_WIDTH, GameScreen.GAME_HEIGHT
 				- GameScreen.GAME_HEIGHT), this);
 		addActor(_monstr);
-		addActor(_ufo);// /
 		addActor(_control);
 
 		this.addListener(new InputListener() {
@@ -73,30 +75,74 @@ public class GameWorld extends Stage {
 
 	@Override
 	public void act(final float delta) {
-		// if (_monstr.isOverlaps(_ufo.getBody())) {
-		// Gdx.app.log("GW", "intersect");
-		// // _ufo.kill();
-		// }
-
+		_gameTime += delta;
+		Gdx.app.log("GW", "" + _gameTime);
 		collisionCheck();
+
 		super.act(delta);
 
 	}
 
 	private void collisionCheck() {
-		Actor[] unitArray = this.getActors().items;
-		for (int i = 0; i < unitArray.length; i++) {
+		// Actor[] unitArray = this.getActors().items;
+		// for (int i = 0; i < unitArray.length; i++) {
+		//
+		// for (int j = 0; j < unitArray.length; j++) {
+		//
+		// if ((((unitArray[i] instanceof Meatball) && (unitArray[j] instanceof
+		// UFO)) || ((unitArray[i] instanceof SpagettiMonstr) && (unitArray[j]
+		// instanceof UFO)))
+		// && ((GameUnit) unitArray[i])
+		// .isOverlaps(((GameUnit) unitArray[j]).getBody())) {
+		// Gdx.app.log("Intersetct", unitArray[i].getClass()
+		// + " with " + unitArray[j].getClass());
+		// ((GameUnit) unitArray[i]).kill();
+		// ((GameUnit) unitArray[j]).kill();
+		// }
+		// }
+		// }
+		new Thread(new Runnable() {
+			Actor[] unitArray = getActors().items;
 
-			for (int j = 0; j < unitArray.length; j++) {
+			@Override
+			public void run() {
+				for (int i = 0; i < unitArray.length; i++) {
 
-				if ((((unitArray[i] instanceof Meatball) && (unitArray[j] instanceof UFO)) || ((unitArray[i] instanceof SpagettiMonstr) && (unitArray[j] instanceof UFO)))
-						&& ((GameUnit) unitArray[i])
-								.isOverlaps(((GameUnit) unitArray[j]).getBody())) {
-					Gdx.app.log("Intersetct", unitArray[i].getClass()
-							+ " with " + unitArray[j].getClass());
-					((GameUnit) unitArray[i]).kill();
-					((GameUnit) unitArray[j]).kill();
+					for (int j = 0; j < unitArray.length; j++) {
+
+						if ((((unitArray[i] instanceof Meatball) && (unitArray[j] instanceof UFO)) || ((unitArray[i] instanceof SpagettiMonstr) && (unitArray[j] instanceof UFO)))
+								&& ((GameUnit) unitArray[i])
+										.isOverlaps(((GameUnit) unitArray[j])
+												.getBody())) {
+							Gdx.app.log("Intersetct", unitArray[i].getClass()
+									+ " with " + unitArray[j].getClass());
+							((GameUnit) unitArray[i]).kill();
+							((GameUnit) unitArray[j]).kill();
+						}
+					}
 				}
+			}
+		}).start();
+	}
+
+	class SheduleGenerateEnemy extends Thread {
+		UFO _ufo;
+
+		@Override
+		public void run() {
+			while (true) {
+				try {
+					Thread.currentThread();
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Random random = new Random();
+				_ufo = new UFO(random.nextFloat() * GameScreen.GAME_HEIGHT,
+						new Vector2(-random.nextFloat() * 50,
+								random.nextFloat() * 50));
+				addActor(_ufo);
 			}
 		}
 	}
