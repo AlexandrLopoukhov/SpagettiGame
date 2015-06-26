@@ -15,6 +15,7 @@ public class UFO extends Actor implements GameUnit {
 	Rectangle _body;
 	Vector2 _velocity = new Vector2(-10, 0);
 	boolean _isAlive;
+	Vector2 _position;
 
 	public UFO() {
 		Gdx.app.log("UFO", "create");
@@ -25,6 +26,8 @@ public class UFO extends Actor implements GameUnit {
 		setX(GameScreen.GAME_WIDTH - getWidth());
 		// setY(GameScreen.GAME_HEIGHT - 30);
 		_body = new Rectangle(getX(), getY(), getWidth(), getHeight());
+		Gdx.app.log("UFO", "" + _body.height + "x" + _body.width);
+		Gdx.app.log("UFO", "" + _body.height + "x" + _body.width);
 	}
 
 	@Override
@@ -58,6 +61,7 @@ public class UFO extends Actor implements GameUnit {
 
 	@Override
 	public void kill() {
+		Gdx.input.vibrate(25);
 		this.remove();
 		_isAlive = false;
 		_texture.dispose();

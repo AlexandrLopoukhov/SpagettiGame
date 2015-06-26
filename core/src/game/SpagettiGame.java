@@ -20,4 +20,9 @@ public class SpagettiGame extends Game {
 	public void render() {
 		super.render();
 	}
+
+	@Override
+	public void dispose() {
+		_game.dispose();
+	}
 }

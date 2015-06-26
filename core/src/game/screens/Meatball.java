@@ -24,6 +24,9 @@ public class Meatball extends Actor implements GameUnit {
 		setY(y);
 		_speed = 30;
 		_body = new Rectangle(getX(), getY(), getWidth(), getHeight());
+		Gdx.app.log("Met", "" + _body.height + "x" + _body.width);
+		Gdx.app.log("MetText",
+				"" + _texture.getHeight() + "x" + _texture.getWidth());
 	}
 
 	@Override
@@ -34,30 +37,32 @@ public class Meatball extends Actor implements GameUnit {
 	@Override
 	public void act(final float delta) {
 		setX(getX() + _speed * delta);
+		_body.setPosition(getX(), getY());
 	}
 
 	@Override
 	public Rectangle getBody() {
-		// TODO Auto-generated method stub
-		return null;
+		return _body;
 	}
 
 	@Override
 	public boolean isAlive() {
-		// TODO Auto-generated method stub
-		return false;
+		return _isAlive;
 	}
 
 	@Override
 	public void kill() {
-		// TODO Auto-generated method stub
-
+		Gdx.input.vibrate(25);
+		this.remove();
+		_isAlive = false;
+		_texture.dispose();
+		// костыль
+		_body.set(0, 0, 0, 0);
 	}
 
 	@Override
 	public boolean isOverlaps(final Rectangle rectangle) {
-		// TODO Auto-generated method stub
-		return false;
+		return _body.overlaps(rectangle);
 	}
 
 }
