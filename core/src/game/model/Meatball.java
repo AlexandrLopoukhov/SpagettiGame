@@ -1,4 +1,4 @@
-package game.screens;
+package game.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import game.controller.AssetLoader;
-import game.model.GameUnit;
+import game.screens.GameScreen;
 
 public class Meatball extends Actor implements GameUnit {
 	// Texture _texture;

@@ -1,8 +1,8 @@
 package game.controller;
 
 import game.model.GameWorld;
+import game.model.Meatball;
 import game.screens.GameScreen;
-import game.screens.Meatball;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
