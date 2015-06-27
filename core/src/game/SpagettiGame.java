@@ -1,19 +1,21 @@
 package game;
 
 import game.screens.GameScreen;
+import game.screens.IntroScreen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 public class SpagettiGame extends Game {
-	public Screen _game;
+	public Screen _gameScreen;
+	public Screen _introScreen;
 
 	@Override
 	public void create() {
 		Gdx.app.log("SpagettiGame", "create game");
-		_game = new GameScreen();
-		setScreen(_game);
+		_introScreen = new IntroScreen(this);
+		setScreen(_introScreen);
 	}
 
 	@Override
@@ -23,6 +25,7 @@ public class SpagettiGame extends Game {
 
 	@Override
 	public void dispose() {
-		_game.dispose();
+		// screen.dispose();
 	}
+
 }

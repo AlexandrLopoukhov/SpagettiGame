@@ -2,6 +2,7 @@ package game.model;
 
 import java.util.Random;
 
+import game.SpagettiGame;
 import game.controller.AssetLoader;
 import game.controller.WalkingController;
 import game.screens.GameScreen;
@@ -19,11 +20,23 @@ public class GameWorld extends Stage {
 	SpagettiMonstr _monstr;
 	WalkingController _control;
 	float _gameTime = 0;
-	SheduleGenerateEnemy _ufoGenerator;
 
-	public GameWorld(final StretchViewport stretchViewport) {
+	public float getGameTime() {
+		return _gameTime;
+	}
+
+	public void setGameTime(final float gameTime) {
+		_gameTime = gameTime;
+	}
+
+	SheduleGenerateEnemy _ufoGenerator;
+	GameScreen _gameScreen;
+
+	public GameWorld(final StretchViewport stretchViewport,
+			final GameScreen gameScreen) {
 		super(stretchViewport);
 		AssetLoader.loadAsset();
+		_gameScreen = gameScreen;
 		_ufoGenerator = new SheduleGenerateEnemy();
 		_ufoGenerator.start();
 		Gdx.app.log("GameWorld", "create");
@@ -84,8 +97,9 @@ public class GameWorld extends Stage {
 		super.act(delta);
 		if (!_monstr.isAlive()) {
 			_ufoGenerator.stop();
+			_gameScreen.setFinall();
 			this.dispose();
-			Gdx.app.log("gw", "STOP");
+			Gdx.app.log("gw", "STOP" + _gameTime);
 		}
 
 	}

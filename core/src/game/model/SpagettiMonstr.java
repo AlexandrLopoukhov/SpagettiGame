@@ -26,7 +26,6 @@ public class SpagettiMonstr extends Actor implements GameUnit {
 		_speedConstant = 50;
 		_body = new Rectangle(getX(), getY(), getWidth(), getHeight());
 		Gdx.app.log("SpBody", "" + _body.height + "x" + _body.width);
-		Gdx.app.log("SpBody", "" + _body.height + "x" + _body.width);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package game.screens;
 
+import game.SpagettiGame;
 import game.model.GameWorld;
 
 import com.badlogic.gdx.Gdx;
@@ -9,14 +10,18 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class GameScreen implements Screen {
-	private Stage _stage;
+	private GameWorld _stage;
+	SpagettiGame _game;
 	final static public int GAME_HEIGHT = Gdx.graphics.getHeight();
 	final static public int GAME_WIDTH = Gdx.graphics.getWidth();
 
-	public GameScreen() {
+	public GameScreen(final SpagettiGame game) {
 		Gdx.app.log("GameScreen", "create");
-		_stage = new GameWorld(new StretchViewport(GAME_WIDTH, GAME_HEIGHT));
+		_game = game;
+		_stage = new GameWorld(new StretchViewport(GAME_WIDTH, GAME_HEIGHT),
+				this);
 		Gdx.input.setInputProcessor(_stage);
+		Gdx.app.log("main3", "" + Gdx.input.getInputProcessor());
 	}
 
 	@Override
@@ -58,6 +63,15 @@ public class GameScreen implements Screen {
 	public void dispose() {
 		Gdx.app.log("GameScreen", "dispose");
 		_stage.dispose();
+	}
+
+	public void setFinall() {
+		_game.setScreen(new FinalScreen(this));
+
+	}
+
+	public GameWorld getStage() {
+		return _stage;
 	}
 
 }
