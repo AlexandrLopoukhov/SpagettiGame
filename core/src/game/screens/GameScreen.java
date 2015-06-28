@@ -6,7 +6,6 @@ import game.model.GameWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class GameScreen implements Screen {
@@ -16,12 +15,11 @@ public class GameScreen implements Screen {
 	final static public int GAME_WIDTH = Gdx.graphics.getWidth();
 
 	public GameScreen(final SpagettiGame game) {
-		Gdx.app.log("GameScreen", "create");
 		_game = game;
 		_stage = new GameWorld(new StretchViewport(GAME_WIDTH, GAME_HEIGHT),
 				this);
 		Gdx.input.setInputProcessor(_stage);
-		Gdx.app.log("main3", "" + Gdx.input.getInputProcessor());
+		Gdx.app.log("GameScreen", "create");
 	}
 
 	@Override
@@ -31,7 +29,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(final float delta) {
-		// Gdx.app.log("GameScreen", "render in " + delta);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		_stage.act(delta);
@@ -66,7 +63,7 @@ public class GameScreen implements Screen {
 	}
 
 	public void setFinall() {
-		_game.setScreen(new FinalScreen(this));
+		_game.setScreen(new FinalScreen(_game));
 
 	}
 

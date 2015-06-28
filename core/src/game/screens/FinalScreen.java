@@ -1,5 +1,7 @@
 package game.screens;
 
+import game.SpagettiGame;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -15,14 +17,15 @@ public class FinalScreen implements Screen {
 	private SpriteBatch _batch;
 	Texture _texture;
 	private BitmapFont _fontRed1;
-	GameScreen _gameScreen;
+	private SpagettiGame _game;
 
-	public FinalScreen(final GameScreen gameScreen) {
+	public FinalScreen(final SpagettiGame game) {
 		_texture = new Texture(Gdx.files.internal("main.jpg"));
-		_gameScreen = gameScreen;
+		_game = game;
 		_batch = new SpriteBatch();
 		_fontRed1 = new BitmapFont();
 		_fontRed1.setColor(Color.RED);
+		Gdx.app.log("FinalScreen", "create");
 	}
 
 	@Override
@@ -35,9 +38,12 @@ public class FinalScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		_batch.begin();
 		_batch.draw(_texture, 0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-		_fontRed1.draw(_batch, "" + "Game Over", 15, CAMERA_HEIGHT - 10);
-		_fontRed1.draw(_batch, "" + "" + _gameScreen.getStage().getGameTime(),
-				15, CAMERA_HEIGHT - 30);
+		_fontRed1.getData().setScale(2, 3);
+		_fontRed1.draw(_batch, "" + "Game Over", CAMERA_WIDTH / 3,
+				CAMERA_HEIGHT * 0.2f);
+		_fontRed1.draw(_batch, "" + "Score: "
+				+ _game._gameScreen.getStage().getGameTime(), CAMERA_WIDTH / 3,
+				CAMERA_HEIGHT * 0.1f);
 		_batch.end();
 
 	}
@@ -56,10 +62,13 @@ public class FinalScreen implements Screen {
 
 	@Override
 	public void hide() {
+		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
 	public void dispose() {
+		this.dispose();
+		_batch.dispose();
 	}
 
 }

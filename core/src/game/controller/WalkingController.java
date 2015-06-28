@@ -15,9 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class WalkingController extends Actor {
-	Texture _temp;
-	TextureRegion _arrows;
-	TextureRegion _khob;
+	// Texture _temp;
+	// TextureRegion _arrows;
+	// TextureRegion _khob;
 	// размер джостика
 	public static float SIZE = (GameScreen.GAME_HEIGHT + GameScreen.GAME_WIDTH) / 10;
 	// размер движущейся части (khob)
@@ -35,20 +35,20 @@ public class WalkingController extends Actor {
 	public WalkingController(final Vector2 pos, final GameWorld world) {
 		Gdx.app.log("WalkingControl", "create");
 
-		_temp = new Texture(Gdx.files.internal("atlas.png"));
-		TextureRegion tmpLeftRight[][] = TextureRegion.split(_temp,
-				_temp.getWidth() / 2, _temp.getHeight() / 2);
-		TextureRegion left2[][] = tmpLeftRight[0][0].split(
-				tmpLeftRight[0][0].getRegionWidth() / 2,
-				tmpLeftRight[0][0].getRegionHeight());
-		TextureRegion left[][] = left2[0][0].split(
-				left2[0][0].getRegionWidth() / 4,
-				left2[0][0].getRegionHeight() / 8);
-		_arrows = tmpLeftRight[0][1];
-		TextureRegion rightbot[][] = tmpLeftRight[1][1].split(
-				tmpLeftRight[1][1].getRegionWidth() / 2,
-				tmpLeftRight[1][1].getRegionHeight() / 2);
-		_khob = rightbot[0][1];
+		// _temp = new Texture(Gdx.files.internal("atlas.png"));
+		// TextureRegion tmpLeftRight[][] = TextureRegion.split(_temp,
+		// _temp.getWidth() / 2, _temp.getHeight() / 2);
+		// TextureRegion left2[][] = tmpLeftRight[0][0].split(
+		// tmpLeftRight[0][0].getRegionWidth() / 2,
+		// tmpLeftRight[0][0].getRegionHeight());
+		// TextureRegion left[][] = left2[0][0].split(
+		// left2[0][0].getRegionWidth() / 4,
+		// left2[0][0].getRegionHeight() / 8);
+		// _arrows = tmpLeftRight[0][1];
+		// TextureRegion rightbot[][] = tmpLeftRight[1][1].split(
+		// tmpLeftRight[1][1].getRegionWidth() / 2,
+		// tmpLeftRight[1][1].getRegionHeight() / 2);
+		// _khob = rightbot[0][1];
 
 		this._position = pos;
 		this._bounds.width = SIZE;
@@ -85,11 +85,10 @@ public class WalkingController extends Actor {
 	@Override
 	public void draw(final Batch batch, final float parentAlfa) {
 
-		batch.draw(_arrows, getX(), getY(), getWidth(), getHeight());
-		batch.draw(_khob,
-				getX() + SIZE / 2 - CSIZE / 2 + getOffsetPosition().x, getY()
-						+ SIZE / 2 - CSIZE / 2 + getOffsetPosition().y, CSIZE,
-				CSIZE);
+		batch.draw(AssetLoader._arrows, getX(), getY(), getWidth(), getHeight());
+		batch.draw(AssetLoader._khob, getX() + SIZE / 2 - CSIZE / 2
+				+ getOffsetPosition().x, getY() + SIZE / 2 - CSIZE / 2
+				+ getOffsetPosition().y, CSIZE, CSIZE);
 
 	}
 
@@ -119,7 +118,7 @@ public class WalkingController extends Actor {
 	}
 
 	public void withControl(final float x, final float y) {
-		if (Gdx.input.isTouched(2)) {
+		if (Gdx.input.isTouched(1)) {
 			_world.addActor(new Meatball(_world.getMonstr().getX(), _world
 					.getMonstr().getY()));
 		}

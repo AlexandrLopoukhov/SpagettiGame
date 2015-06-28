@@ -4,18 +4,15 @@ import java.util.HashMap;
 
 import game.SpagettiGame;
 
-import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class IntroScreen implements Screen, InputProcessor {
-	SpagettiGame _game;
-	private int _width, _height;
+	private SpagettiGame _game;
 	private Texture _bgTexture;
 	private SpriteBatch _spriteBatch;
 	float CAMERA_WIDTH = Gdx.graphics.getWidth();
@@ -61,6 +58,7 @@ public class IntroScreen implements Screen, InputProcessor {
 	public IntroScreen(final SpagettiGame game) {
 		this._game = game;
 		Gdx.input.setInputProcessor(this);
+		Gdx.app.log("IntroScreen", "create");
 	}
 
 	@Override
@@ -103,6 +101,7 @@ public class IntroScreen implements Screen, InputProcessor {
 			_textures.clear();
 		} catch (Exception e) {
 		}
+		this.dispose();
 	}
 
 	@Override

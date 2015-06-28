@@ -2,11 +2,11 @@ package game.model;
 
 import java.util.Random;
 
-import game.SpagettiGame;
 import game.controller.AssetLoader;
 import game.controller.WalkingController;
 import game.screens.GameScreen;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
@@ -35,18 +35,20 @@ public class GameWorld extends Stage {
 	public GameWorld(final StretchViewport stretchViewport,
 			final GameScreen gameScreen) {
 		super(stretchViewport);
+		Gdx.app.log("GameWorld", "create on " + Gdx.app.getType());
 		AssetLoader.loadAsset();
 		_gameScreen = gameScreen;
 		_ufoGenerator = new SheduleGenerateEnemy();
 		_ufoGenerator.start();
-		Gdx.app.log("GameWorld", "create");
 		addActor(new Background());
+		if (Gdx.app.getType().equals(Application.ApplicationType.Android)) {
+			_control = new WalkingController(new Vector2(GameScreen.GAME_WIDTH
+					- GameScreen.GAME_WIDTH, GameScreen.GAME_HEIGHT
+					- GameScreen.GAME_HEIGHT), this);
+			addActor(_control);
+		}
 		_monstr = new SpagettiMonstr();
-		_control = new WalkingController(new Vector2(GameScreen.GAME_WIDTH
-				- GameScreen.GAME_WIDTH, GameScreen.GAME_HEIGHT
-				- GameScreen.GAME_HEIGHT), this);
 		addActor(_monstr);
-		addActor(_control);
 
 		this.addListener(new InputListener() {
 			@Override
@@ -91,41 +93,49 @@ public class GameWorld extends Stage {
 	@Override
 	public void act(final float delta) {
 		_gameTime += delta;
-		Gdx.app.log("GW", "" + _gameTime);
+		Gdx.app.log("GameWorld", "game time " + _gameTime);
 		collisionCheck();
 
 		super.act(delta);
 		if (!_monstr.isAlive()) {
-			_ufoGenerator.stop();
+			Gdx.app.log("GW", "" + _ufoGenerator.isInterrupted());
+			_ufoGenerator.interrupt();
+			Gdx.app.log("GW", "" + _ufoGenerator.isInterrupted());
 			_gameScreen.setFinall();
 			this.dispose();
-			Gdx.app.log("gw", "STOP" + _gameTime);
+			Gdx.app.log("GameWorld", "STOP at" + _gameTime);
 		}
 
 	}
 
 	private void collisionCheck() {
 		new Thread(new Runnable() {
-			Actor[] unitArray = getActors().items;
+			Actor[] _unitArray = getActors().items;
 
 			@Override
 			public void run() {
-				for (int i = 0; i < unitArray.length; i++) {
-
-					for (int j = 0; j < unitArray.length; j++) {
-
-						if ((((unitArray[i] instanceof Meatball) && (unitArray[j] instanceof UFO)) || ((unitArray[i] instanceof SpagettiMonstr) && (unitArray[j] instanceof UFO)))
-								&& ((GameUnit) unitArray[i])
-										.isOverlaps(((GameUnit) unitArray[j])
-												.getBody())) {
-							Gdx.app.log("Intersetct", unitArray[i].getClass()
-									+ " with " + unitArray[j].getClass());
-							((GameUnit) unitArray[i]).kill();
-							((GameUnit) unitArray[j]).kill();
+				try {
+					for (int i = 0; i < _unitArray.length; i++) {
+						for (int j = 0; j < _unitArray.length; j++) {
+							if ((((_unitArray[i] instanceof Meatball) && (_unitArray[j] instanceof UFO)) || ((_unitArray[i] instanceof SpagettiMonstr) && (_unitArray[j] instanceof UFO)))
+									&& ((GameUnit) _unitArray[i])
+											.isOverlaps(((GameUnit) _unitArray[j])
+													.getBody())) {
+								Gdx.app.log("GameWorld", "intersect "
+										+ _unitArray[i].getClass() + " with "
+										+ _unitArray[j].getClass());
+								((GameUnit) _unitArray[i]).kill();
+								((GameUnit) _unitArray[j]).kill();
+							}
 						}
 					}
+				} catch (NullPointerException e) {
+					Gdx.app.log("GameWorld",
+							"collisionCheck error-cause check in other Thread for speed up ");
 				}
+
 			}
+
 		}).start();
 	}
 
@@ -134,7 +144,7 @@ public class GameWorld extends Stage {
 
 		@Override
 		public void run() {
-			while (true) {
+			while (!this.isInterrupted()) {
 				try {
 					Thread.currentThread();
 					Thread.sleep(2000);
@@ -143,8 +153,8 @@ public class GameWorld extends Stage {
 				}
 				Random random = new Random();
 				_ufo = new UFO(random.nextFloat() * GameScreen.GAME_HEIGHT,
-						new Vector2(-random.nextFloat() * 50,
-								random.nextFloat() * 50));
+						new Vector2(-random.nextFloat() * 80,
+								random.nextFloat() * 40));
 				addActor(_ufo);
 			}
 		}
