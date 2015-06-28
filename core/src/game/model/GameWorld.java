@@ -144,11 +144,13 @@ public class GameWorld extends Stage {
 
 		@Override
 		public void run() {
-			while (!this.isInterrupted()) {
+			while (!Thread.currentThread().isInterrupted()) {
 				try {
-					Thread.currentThread();
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
+					// здесь т.к. слип сбрасывает значение флага выбрасывая
+					// исключение
+					Thread.currentThread().interrupt();
 					e.printStackTrace();
 				}
 				Random random = new Random();

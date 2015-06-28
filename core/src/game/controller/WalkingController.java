@@ -5,9 +5,7 @@ import game.model.Meatball;
 import game.screens.GameScreen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -15,9 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class WalkingController extends Actor {
-	// Texture _temp;
-	// TextureRegion _arrows;
-	// TextureRegion _khob;
 	// размер джостика
 	public static float SIZE = (GameScreen.GAME_HEIGHT + GameScreen.GAME_WIDTH) / 10;
 	// размер движущейся части (khob)
@@ -34,22 +29,6 @@ public class WalkingController extends Actor {
 
 	public WalkingController(final Vector2 pos, final GameWorld world) {
 		Gdx.app.log("WalkingControl", "create");
-
-		// _temp = new Texture(Gdx.files.internal("atlas.png"));
-		// TextureRegion tmpLeftRight[][] = TextureRegion.split(_temp,
-		// _temp.getWidth() / 2, _temp.getHeight() / 2);
-		// TextureRegion left2[][] = tmpLeftRight[0][0].split(
-		// tmpLeftRight[0][0].getRegionWidth() / 2,
-		// tmpLeftRight[0][0].getRegionHeight());
-		// TextureRegion left[][] = left2[0][0].split(
-		// left2[0][0].getRegionWidth() / 4,
-		// left2[0][0].getRegionHeight() / 8);
-		// _arrows = tmpLeftRight[0][1];
-		// TextureRegion rightbot[][] = tmpLeftRight[1][1].split(
-		// tmpLeftRight[1][1].getRegionWidth() / 2,
-		// tmpLeftRight[1][1].getRegionHeight() / 2);
-		// _khob = rightbot[0][1];
-
 		this._position = pos;
 		this._bounds.width = SIZE;
 		this._bounds.height = SIZE;
@@ -99,8 +78,6 @@ public class WalkingController extends Actor {
 
 	@Override
 	public Actor hit(final float x, final float y, final boolean touchable) {
-		// Процедура проверки. Если точка в прямоугольнике актёра, возвращаем
-		// актёра.
 		return x > 0 && x < getWidth() && y > 0 && y < getHeight() ? this
 				: null;
 	}
