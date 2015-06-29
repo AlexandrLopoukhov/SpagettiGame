@@ -29,7 +29,6 @@ public class SpagettiGame extends Game {
 
 	@Override
 	public void dispose() {
-		// screen.dispose();
 	}
 
 }

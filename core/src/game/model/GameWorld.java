@@ -183,7 +183,6 @@ public class GameWorld extends Stage {
 					// здесь т.к. слип сбрасывает значение флага выбрасывая
 					// исключение
 					Thread.currentThread().interrupt();
-					e.printStackTrace();
 				}
 				Random random = new Random();
 				_ufo = new UFO(random.nextFloat() * GameScreen.GAME_HEIGHT,

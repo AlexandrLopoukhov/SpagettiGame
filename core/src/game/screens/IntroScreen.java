@@ -95,12 +95,9 @@ public class IntroScreen implements Screen, InputProcessor {
 
 	@Override
 	public void dispose() {
-		try {
-			_spriteBatch.dispose();
-			_bgTexture.dispose();
-			_textures.clear();
-		} catch (Exception e) {
-		}
+		_spriteBatch.dispose();
+		_bgTexture.dispose();
+		_textures.clear();
 		this.dispose();
 	}
 

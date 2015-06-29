@@ -60,6 +60,7 @@ public class GameScreen implements Screen {
 	public void dispose() {
 		Gdx.app.log("GameScreen", "dispose");
 		_stage.dispose();
+		this.dispose();
 	}
 
 	public void setFinall() {
