@@ -95,17 +95,46 @@ public class GameWorld extends Stage {
 		_gameTime += delta;
 		Gdx.app.log("GameWorld", "game time " + _gameTime);
 		collisionCheck();
+		freeSpace();
 
 		super.act(delta);
+
 		if (!_monstr.isAlive()) {
-			Gdx.app.log("GW", "" + _ufoGenerator.isInterrupted());
 			_ufoGenerator.interrupt();
-			Gdx.app.log("GW", "" + _ufoGenerator.isInterrupted());
 			_gameScreen.setFinall();
 			this.dispose();
 			Gdx.app.log("GameWorld", "STOP at" + _gameTime);
 		}
 
+	}
+
+	private void freeSpace() {
+		new Thread(new Runnable() {
+			Actor[] _unitArray = getActors().items;
+
+			@Override
+			public void run() {
+				try {
+					for (int i = 0; i < _unitArray.length; i++) {
+						if (((_unitArray[i] instanceof Meatball) || (_unitArray[i] instanceof UFO))
+								&& (_unitArray[i].getX() > GameScreen.GAME_WIDTH
+										|| _unitArray[i].getX() < 0
+										|| _unitArray[i].getY() < 0 || _unitArray[i]
+										.getY() > GameScreen.GAME_HEIGHT)) {
+							Gdx.app.log("GameWorld", "leave screen "
+									+ _unitArray[i].getClass().getSimpleName()
+									+ " so, kill it");
+							((GameUnit) _unitArray[i]).kill();
+						}
+					}
+				} catch (NullPointerException e) {
+					Gdx.app.log("GameWorld",
+							"freeSpace error-cause check in other Thread for speed up ");
+				}
+
+			}
+
+		}).start();
 	}
 
 	private void collisionCheck() {
@@ -122,8 +151,11 @@ public class GameWorld extends Stage {
 											.isOverlaps(((GameUnit) _unitArray[j])
 													.getBody())) {
 								Gdx.app.log("GameWorld", "intersect "
-										+ _unitArray[i].getClass() + " with "
-										+ _unitArray[j].getClass());
+										+ _unitArray[i].getClass()
+												.getSimpleName()
+										+ " with "
+										+ _unitArray[j].getClass()
+												.getSimpleName());
 								((GameUnit) _unitArray[i]).kill();
 								((GameUnit) _unitArray[j]).kill();
 							}
@@ -155,8 +187,8 @@ public class GameWorld extends Stage {
 				}
 				Random random = new Random();
 				_ufo = new UFO(random.nextFloat() * GameScreen.GAME_HEIGHT,
-						new Vector2(-random.nextFloat() * 80,
-								random.nextFloat() * 40));
+						new Vector2(-random.nextFloat() * 120,
+								random.nextFloat() * 20));
 				addActor(_ufo);
 			}
 		}

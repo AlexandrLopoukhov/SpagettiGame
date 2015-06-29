@@ -14,9 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class WalkingController extends Actor {
 	// размер джостика
-	public static float SIZE = (GameScreen.GAME_HEIGHT + GameScreen.GAME_WIDTH) / 10;
+	public static float SIZE = (GameScreen.GAME_HEIGHT + GameScreen.GAME_WIDTH) / 6;
 	// размер движущейся части (khob)
-	public static float CSIZE = (GameScreen.GAME_HEIGHT + GameScreen.GAME_WIDTH) / 20;
+	public static float CSIZE = (GameScreen.GAME_HEIGHT + GameScreen.GAME_WIDTH) / 15;
 
 	float _angle;
 	GameWorld _world;

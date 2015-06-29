@@ -20,7 +20,7 @@ public class SpagettiMonstr extends Actor implements GameUnit {
 		setWidth(GameScreen.GAME_WIDTH / 10);
 		setHeight(GameScreen.GAME_HEIGHT / 10);
 		_velocity = new Vector2(0, 0);
-		_speedConstant = 80;
+		_speedConstant = 120;
 		_body = new Rectangle(getX(), getY(), getWidth(), getHeight());
 		Gdx.app.log("SpagettiMonstr", "create on x: " + getX() + " y: "
 				+ getY() + " with width: " + getWidth() + " and height "
