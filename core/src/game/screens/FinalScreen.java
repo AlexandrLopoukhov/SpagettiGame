@@ -3,6 +3,7 @@ package game.screens;
 import game.SpagettiGame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -25,6 +26,60 @@ public class FinalScreen implements Screen {
 		_batch = new SpriteBatch();
 		_fontRed1 = new BitmapFont();
 		_fontRed1.setColor(Color.RED);
+		Gdx.input.setInputProcessor(new InputProcessor() {
+
+			@Override
+			public boolean touchUp(final int screenX, final int screenY,
+					final int pointer, final int button) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public boolean touchDragged(final int screenX, final int screenY,
+					final int pointer) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public boolean touchDown(final int screenX, final int screenY,
+					final int pointer, final int button) {
+				_game._introScreen = new IntroScreen(_game);
+				_game.setScreen(_game._introScreen);
+				return false;
+			}
+
+			@Override
+			public boolean scrolled(final int amount) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public boolean mouseMoved(final int screenX, final int screenY) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public boolean keyUp(final int keycode) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public boolean keyTyped(final char character) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public boolean keyDown(final int keycode) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		});
 		Gdx.app.log("FinalScreen", "create");
 	}
 
@@ -45,7 +100,6 @@ public class FinalScreen implements Screen {
 				+ _game._gameScreen.getStage().getGameTime(), CAMERA_WIDTH / 3,
 				CAMERA_HEIGHT * 0.1f);
 		_batch.end();
-
 	}
 
 	@Override
@@ -62,11 +116,13 @@ public class FinalScreen implements Screen {
 
 	@Override
 	public void hide() {
-		Gdx.input.setInputProcessor(null);
+		Gdx.app.log("FinalScreen", "hide");
+		// Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
 	public void dispose() {
+		Gdx.app.log("FinalScreen", "dispose");
 		this.dispose();
 		_batch.dispose();
 	}

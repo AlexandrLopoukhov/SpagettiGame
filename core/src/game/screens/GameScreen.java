@@ -53,7 +53,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void hide() {
 		Gdx.app.log("GameScreen", "hide");
-		Gdx.input.setInputProcessor(null);
+		// Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
@@ -64,7 +64,8 @@ public class GameScreen implements Screen {
 	}
 
 	public void setFinall() {
-		_game.setScreen(new FinalScreen(_game));
+		_game._finalScreen = new FinalScreen(_game);
+		_game.setScreen(_game._finalScreen);
 
 	}
 

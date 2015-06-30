@@ -68,6 +68,7 @@ public class IntroScreen implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
+		Gdx.app.log("IntroScreen", "hide");
 	}
 
 	@Override
@@ -95,6 +96,7 @@ public class IntroScreen implements Screen, InputProcessor {
 
 	@Override
 	public void dispose() {
+		Gdx.app.log("IntroScreen", "dispose");
 		_spriteBatch.dispose();
 		_bgTexture.dispose();
 		_textures.clear();
@@ -139,10 +141,11 @@ public class IntroScreen implements Screen, InputProcessor {
 	@Override
 	public boolean touchUp(final int x, final int y, final int pointer,
 			final int button) {
-		_game._gameScreen = new GameScreen(this._game);
-		_game.setScreen(_game._gameScreen);
-		_downBtn = false;
-		Gdx.app.log("main4", "" + Gdx.input.getInputProcessor());
+		if (_downBtn) {
+			_game._gameScreen = new GameScreen(_game);
+			_game.setScreen(_game._gameScreen);
+			_downBtn = false;
+		}
 		return true;
 	}
 

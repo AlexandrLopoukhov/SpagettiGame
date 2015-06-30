@@ -1,5 +1,6 @@
 package game;
 
+import game.screens.FinalScreen;
 import game.screens.GameScreen;
 import game.screens.IntroScreen;
 
@@ -10,6 +11,7 @@ import com.badlogic.gdx.audio.Music;
 public class SpagettiGame extends Game {
 	public GameScreen _gameScreen;
 	public IntroScreen _introScreen;
+	public FinalScreen _finalScreen;
 	Music _music;
 
 	@Override
